@@ -27,7 +27,8 @@ import java.util.Deque;
 
 public class GlobalActionBarService extends AccessibilityService implements SensorEventListener {
     private Integer twistCount=0, dipCount=0, tiltCount=0;
-    private Long twistTime=System.nanoTime(), dipTime=System.nanoTime(), tiltTime=System.nanoTime();
+    boolean coolDown=false;
+    private Long twistTime=System.nanoTime(), dipTime=System.nanoTime(), tiltTime=System.nanoTime(), coolDownTime=System.nanoTime();
     Sensor gyroscope;
     SensorManager sensorManager;
 
@@ -50,7 +51,8 @@ public class GlobalActionBarService extends AccessibilityService implements Sens
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        if (event != null) {
+        if (event != null && (!coolDown || System.nanoTime() - coolDownTime > 1000000000)) {
+            coolDown=false;
             String twist1 = "com.google.android.youtube";
             String twist2 = "com.duolingo";
             String tilt1 = "com.instagram.android";
@@ -65,6 +67,8 @@ public class GlobalActionBarService extends AccessibilityService implements Sens
                 if (event.values[1] > 5 && twistCount == 1) {
                     twistCount += 1;
                     launchApp(twist2);
+                    coolDown=true;
+                    coolDownTime=System.nanoTime();
                     Log.d("Sensor", "LAUNCHING TWO TWIST INTENT");
                 }
                 if (event.values[1] > 5 && twistCount == 0) {
@@ -75,6 +79,8 @@ public class GlobalActionBarService extends AccessibilityService implements Sens
                 if (System.nanoTime() - twistTime > 1000000000) {
                     twistCount = 0;
                     launchApp(twist1);
+                    coolDown=true;
+                    coolDownTime=System.nanoTime();
                     Log.d("Sensor", "LAUNCHING ONE TWIST INTENT");
                 }
                 if (twistCount > 1) {
@@ -89,6 +95,8 @@ public class GlobalActionBarService extends AccessibilityService implements Sens
                 if (event.values[2] > 5 && tiltCount == 1) {
                     tiltCount += 1;
                     launchApp(tilt2);
+                    coolDown=true;
+                    coolDownTime=System.nanoTime();
                     Log.d("Sensor", "LAUNCHING TWO TILT INTENT");
                 }
                 if (event.values[2] > 5 && tiltCount == 0) {
@@ -99,6 +107,8 @@ public class GlobalActionBarService extends AccessibilityService implements Sens
                 if (System.nanoTime() - tiltTime > 1000000000) {
                     tiltCount = 0;
                     launchApp(tilt1);
+                    coolDown=true;
+                    coolDownTime=System.nanoTime();
                     Log.d("Sensor", "LAUNCHING ONE TILT INTENT");
                 }
                 if (tiltCount > 1) {
@@ -113,6 +123,8 @@ public class GlobalActionBarService extends AccessibilityService implements Sens
                 if (event.values[0] > 5 && dipCount == 1) {
                     dipCount += 1;
                     launchApp(dip2);
+                    coolDown=true;
+                    coolDownTime=System.nanoTime();
                     Log.d("Sensor", "LAUNCHING TWO DIP INTENT");
                 }
                 if (event.values[0] > 5 && dipCount == 0) {
@@ -123,13 +135,16 @@ public class GlobalActionBarService extends AccessibilityService implements Sens
                 if (System.nanoTime() - dipTime > 1000000000) {
                     dipCount = 0;
                     launchApp(dip1);
+                    coolDown=true;
+                    coolDownTime=System.nanoTime();
                     Log.d("Sensor", "LAUNCHING ONE DIP INTENT");
                 }
                 if (dipCount > 1) {
                     Log.d("Sensor", "RESETTING DIP COUNT");
                     dipCount = 0;
                 }
-            }}}
+            }}
+    }
 
             @Override
             public void onAccuracyChanged (Sensor sensor,int accuracy){
