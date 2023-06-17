@@ -64,14 +64,14 @@ public class GlobalActionBarService extends AccessibilityService implements Sens
                 if (twistCount == 0) {
                     twistTime = System.nanoTime();
                 }
-                if (event.values[1] > 5 && twistCount == 1) {
+                if (event.values[1] < -5 && twistCount == 1) {
                     twistCount += 1;
                     launchApp(twist2);
                     coolDown=true;
                     coolDownTime=System.nanoTime();
                     Log.d("Sensor", "LAUNCHING TWO TWIST INTENT");
                 }
-                if (event.values[1] > 5 && twistCount == 0) {
+                if (event.values[1] < -10 && twistCount == 0) {
                     twistCount += 1;
                     Log.d("Sensor", "FIRST TWIST $twistCount");
                     //launchIntent?.let { startActivity(launchIntent) }
@@ -99,7 +99,7 @@ public class GlobalActionBarService extends AccessibilityService implements Sens
                     coolDownTime=System.nanoTime();
                     Log.d("Sensor", "LAUNCHING TWO TILT INTENT");
                 }
-                if (event.values[2] > 5 && tiltCount == 0) {
+                if (event.values[2] > 10 && tiltCount == 0) {
                     tiltCount += 1;
                     Log.d("Sensor", "FIRST TILT $tiltCount");
                     //launchIntent?.let { startActivity(launchIntent) }
@@ -127,7 +127,7 @@ public class GlobalActionBarService extends AccessibilityService implements Sens
                     coolDownTime=System.nanoTime();
                     Log.d("Sensor", "LAUNCHING TWO DIP INTENT");
                 }
-                if (event.values[0] > 5 && dipCount == 0) {
+                if (event.values[0] > 10 && dipCount == 0) {
                     dipCount += 1;
                     Log.d("Sensor", "FIRST DIP $dipCount");
                     //launchIntent?.let { startActivity(launchIntent) }
