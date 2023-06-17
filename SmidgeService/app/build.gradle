@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 33
     defaultConfig {
-        applicationId "com.example.android.demoservice"
+        applicationId "com.example.android.smidge"
         minSdkVersion 24
         targetSdkVersion 33
         versionCode 1
@@ -16,7 +16,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    namespace 'com.example.android.globalactionbarservice'
+    namespace 'com.example.android.smidge'
 }
 
 dependencies {

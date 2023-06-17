@@ -1,31 +1,17 @@
 
-package com.example.android.globalactionbarservice;
+package com.example.android.smidge;
 
 import android.accessibilityservice.AccessibilityService;
-import android.accessibilityservice.GestureDescription;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Path;
-import android.graphics.PixelFormat;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.media.AudioManager;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
-import android.view.accessibility.AccessibilityNodeInfo;
-import android.widget.Button;
-import android.widget.FrameLayout;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-
-public class GlobalActionBarService extends AccessibilityService implements SensorEventListener {
+public class MainActivity extends AccessibilityService implements SensorEventListener {
     private Integer twistCount=0, dipCount=0, tiltCount=0;
     boolean coolDown=false;
     private Long twistTime=System.nanoTime(), dipTime=System.nanoTime(), tiltTime=System.nanoTime(), coolDownTime=System.nanoTime();

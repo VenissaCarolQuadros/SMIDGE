@@ -22,14 +22,14 @@
         tools:ignore="QueryAllPackagesPermission" />
     <application>
         <service
-                android:name=".GlobalActionBarService"
+                android:name=".MainActivity"
                 android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE" android:exported="true">
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService"/>
             </intent-filter>
             <meta-data
                     android:name="android.accessibilityservice"
-                    android:resource="@xml/global_action_bar_service"/>
+                    android:resource="@xml/smidge_service"/>
         </service>
     </application>
 </manifest>
